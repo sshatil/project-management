@@ -62,4 +62,51 @@ const updateProject = asyncHandler(async (req, res) => {
   }
 });
 
-export { createProject, addUser, getProject, updateProject };
+// objectId1.equals(objectId2)
+// delete project
+const deleteProject = asyncHandler(async (req, res) => {
+  const project = await Project.findById(req.params.id);
+  if (project) {
+    if (project.user.equals(req.user._id)) {
+      res.json({ msg: "User deleted" });
+    } else {
+      res.status(404);
+      throw new Error("Only admin can delete this project");
+    }
+  } else {
+    res.status(404);
+    throw new Error("Project not found");
+  }
+});
+
+// remove user
+const removeUser = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  const projectId = req.params.id;
+
+  const removeUsers = await Project.findByIdAndUpdate(
+    projectId,
+    {
+      $pull: { users: userId },
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!removeUsers) {
+    res.status(404);
+    throw new Error("Project not found");
+  }
+
+  res.json(removeUsers);
+});
+
+export {
+  createProject,
+  addUser,
+  getProject,
+  updateProject,
+  deleteProject,
+  removeUser,
+};
