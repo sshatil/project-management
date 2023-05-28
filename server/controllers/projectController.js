@@ -16,8 +16,8 @@ const createProject = asyncHandler(async (req, res) => {
   }
 });
 
-// update project
-const updateProject = asyncHandler(async (req, res) => {
+// add multiple user
+const addUser = asyncHandler(async (req, res) => {
   const { userId } = req.body;
   const addUsers = await Project.findByIdAndUpdate(
     req.params.id,
@@ -44,4 +44,22 @@ const getProject = asyncHandler(async (req, res) => {
   res.json(allProjects);
 });
 
-export { createProject, updateProject, getProject };
+// update project
+const updateProject = asyncHandler(async (req, res) => {
+  const { projectName, startingDate, finishingDate, userId, status } = req.body;
+  const project = await Project.findById(req.params.id);
+  if (project) {
+    project.projectName = projectName;
+    project.startingDate = startingDate;
+    project.finishingDate = finishingDate;
+    project.status = status;
+
+    const updatedProject = await project.save();
+    res.json(updatedProject);
+  } else {
+    res.status(404);
+    throw new Error("Project not found");
+  }
+});
+
+export { createProject, addUser, getProject, updateProject };

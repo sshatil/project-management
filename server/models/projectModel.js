@@ -24,6 +24,11 @@ const projectSchema = mongoose.Schema(
     finishingDate: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["Not Started", "In Progress", "Done"],
+      default: "Not Started",
+    },
   },
   {
     timestamps: true,
