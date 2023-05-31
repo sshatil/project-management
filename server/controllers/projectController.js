@@ -123,6 +123,23 @@ const createTask = asyncHandler(async (req, res) => {
   }
 });
 
+// update task
+const updateTask = asyncHandler(async (req, res) => {
+  const { taskName, status, dueDate, assignTo } = req.body;
+  const project = await Project.findById(req.params.id);
+  if (project) {
+    const taskId = req.params.taskId;
+    const task = project.tasks.find((p) => p._id.toString() === taskId);
+    if (task) {
+      res.json(task);
+    } else {
+      res.json({ err: "Task not found" });
+    }
+    // res.json(task);
+  } else {
+  }
+});
+
 export {
   createProject,
   addUser,
@@ -131,4 +148,5 @@ export {
   deleteProject,
   removeUser,
   createTask,
+  updateTask,
 };

@@ -5,6 +5,7 @@ import connectDB from "./config/connectDB.js";
 
 import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+// import bodyParser from "body-parser";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+// app.use(bodyParser.json());
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/project", projectRoutes);
