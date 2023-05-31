@@ -7,6 +7,7 @@ import {
   updateProject,
   deleteProject,
   removeUser,
+  createTask,
 } from "../controllers/projectController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -18,5 +19,6 @@ router
   .delete(protect, deleteProject);
 router.route("/addUser/:id").put(protect, addUser);
 router.route("/removeUsers/:id").put(protect, removeUser);
+router.route("/task/:id").post(protect, createTask);
 
 export default router;

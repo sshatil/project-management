@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Project from "../models/projectModel.js";
+import mongoose from "mongoose";
 
 // create project
 const createProject = asyncHandler(async (req, res) => {
@@ -102,6 +103,26 @@ const removeUser = asyncHandler(async (req, res) => {
   res.json(removeUsers);
 });
 
+// create task for specific user
+const createTask = asyncHandler(async (req, res) => {
+  const { taskName, status, dueDate, assignTo } = req.body;
+  const project = await Project.findById(req.params.id);
+  if (project) {
+    const task = {
+      taskName,
+      status,
+      dueDate,
+      assignTo: new mongoose.Types.ObjectId(assignTo),
+    };
+    project.tasks.push(task);
+    await project.save();
+    res.status(201).json({ msg: "Task added" });
+  } else {
+    res.status(404);
+    throw new Error("Project not found");
+  }
+});
+
 export {
   createProject,
   addUser,
@@ -109,4 +130,5 @@ export {
   updateProject,
   deleteProject,
   removeUser,
+  createTask,
 };
