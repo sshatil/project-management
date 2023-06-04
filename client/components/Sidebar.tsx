@@ -1,10 +1,12 @@
 "use client";
 
+import useColorMode from "@/hooks/useColorMode";
 import { useState } from "react";
 
 const Sidebar = () => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [showNavItem, setShowNavItem] = useState<boolean>(false);
+  const [colorMode, setColorMode] = useColorMode();
   return (
     <div className="">
       <nav className="bg-white border-gray-200 dark:bg-gray-800">
@@ -20,6 +22,14 @@ const Sidebar = () => {
             </span>
           </a>
           <div className="flex items-center md:order-2">
+            <div
+              className="mr-4 cursor-pointer"
+              onClick={() =>
+                setColorMode(colorMode === "light" ? "dark" : "light")
+              }
+            >
+              Theme
+            </div>
             <button
               type="button"
               className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
