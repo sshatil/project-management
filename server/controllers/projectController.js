@@ -69,7 +69,8 @@ const deleteProject = asyncHandler(async (req, res) => {
   const project = await Project.findById(req.params.id);
   if (project) {
     if (project.user.equals(req.user._id)) {
-      res.json({ msg: "User deleted" });
+      await project.deleteOne();
+      res.json({ msg: "Project deleted" });
     } else {
       res.status(404);
       throw new Error("Only admin can delete this project");
@@ -131,12 +132,40 @@ const updateTask = asyncHandler(async (req, res) => {
     const taskId = req.params.taskId;
     const task = project.tasks.find((p) => p._id.toString() === taskId);
     if (task) {
-      res.json(task);
+      task.taskName = taskName;
+      task.status = status;
+      task.dueDate = dueDate;
+
+      const updatedTask = await project.save();
+      res.json(updatedTask);
     } else {
       res.json({ err: "Task not found" });
     }
-    // res.json(task);
   } else {
+    res.status(404);
+    throw new Error("Project not found");
+  }
+});
+
+// delete project
+const deleteTask = asyncHandler(async (req, res) => {
+  const project = await Project.findById(req.params.id);
+  if (project) {
+    const taskId = req.params.taskId;
+    const taskIndex = project.tasks.findIndex(
+      (p) => p._id.toString() === taskId
+    );
+    if (taskIndex !== -1) {
+      project.tasks.splice(taskIndex, 1); // Remove the task from the tasks array
+
+      const updatedProject = await project.save();
+      res.json(updatedProject);
+    } else {
+      res.json({ err: "Task not found" });
+    }
+  } else {
+    res.status(404);
+    throw new Error("Project not found");
   }
 });
 
@@ -149,4 +178,5 @@ export {
   removeUser,
   createTask,
   updateTask,
+  deleteTask,
 };
