@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex justify-between text-black dark:text-[#93999F] dark:bg-[#0D1117] min-h-screen"
+    class="flex text-black dark:text-[#93999F] dark:bg-[#0D1117] min-h-screen"
   >
     <Sidebar />
     <RouterView />

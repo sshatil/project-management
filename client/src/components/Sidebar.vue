@@ -1,11 +1,13 @@
 <template>
-  <section class="">
+  <!-- @click="() => (state.showSidebar = !state.showSidebar)" -->
+  <section>
     <button
       data-drawer-target="sidebar-multi-level-sidebar"
       data-drawer-toggle="sidebar-multi-level-sidebar"
       aria-controls="sidebar-multi-level-sidebar"
       type="button"
       class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      @click="store.commit('sidebar', true)"
     >
       <span class="sr-only">Open sidebar</span>
       <svg
@@ -23,14 +25,29 @@
       </svg>
     </button>
 
+    <!-- <aside
+      class="top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      :class="showSidebar ? '-translate-x-full' : 'translate-x-0'"
+      aria-label="Sidebar"
+    > -->
     <aside
-      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="top-0 left-0 z-40 w-64 h-screen transition-transform sm:block fixed sm:relative"
+      :class="state.showSidebar ? 'block' : 'hidden'"
       aria-label="Sidebar"
     >
       <div
         class="h-full px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-[#161B22]"
       >
-        <ul class="space-y-2 font-medium flex flex-col justify-between h-full">
+        <div
+          v-if="state.showSidebar"
+          class="absolute -right-1"
+          @click="store.commit('sidebar', false)"
+        >
+          <XMarkIcon class="w-7 h-7 -mt-3 cursor-pointer hover:text-red-400" />
+        </div>
+        <ul
+          class="space-y-2 font-medium flex flex-col justify-between h-full pt-4 sm:pt-0"
+        >
           <div class="">
             <li>
               <div
@@ -133,6 +150,7 @@ import {
   MoonIcon,
   SunIcon,
   ArrowLeftOnRectangleIcon,
+  XMarkIcon,
 } from "@heroicons/vue/24/solid";
 
 import { useDark, useToggle } from "@vueuse/core";
@@ -141,6 +159,10 @@ const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
 const dropdown = ref(false);
+// const showSidebar = ref(false);
+import store from "../store/index";
+
+const state = store.state.global;
 
 const handleDropdown = () => {
   dropdown.value = !dropdown.value;
