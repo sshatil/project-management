@@ -5,7 +5,7 @@
       <div
         class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-transparent dark:border-gray-800"
       >
-        <form class="space-y-6" action="#">
+        <form class="space-y-6" @submit.prevent="handleRegister">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Sign in
           </h5>
@@ -22,6 +22,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name"
               required
+              v-model="fromData.name"
             />
           </div>
           <div>
@@ -37,6 +38,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
               required
+              v-model="fromData.email"
             />
           </div>
           <div>
@@ -52,6 +54,7 @@
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
+              v-model="fromData.password"
             />
           </div>
           <!-- <div class="flex items-start">
@@ -97,6 +100,18 @@
 
 <script setup lang="ts">
 import Navbar from "../../components/Navbar.vue";
+
+import { reactive } from "vue";
+
+const fromData = reactive({
+  name: "",
+  email: "",
+  password: "",
+});
+
+const handleRegister = () => {
+  console.log("register");
+};
 </script>
 
 <style scoped></style>

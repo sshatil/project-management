@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between p-3 fixed left-0 right-0 max-w-5xl mx-auto">
-    <h1>Logo</h1>
+    <RouterLink to="/">Logo</RouterLink>
     <div class="">
       <button @click="toggleDark()" class="cursor-pointer">
         <div
@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
 import { useDark, useToggle } from "@vueuse/core";
 
 import { MoonIcon, SunIcon } from "@heroicons/vue/24/solid";
