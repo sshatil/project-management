@@ -3,7 +3,7 @@ import store from "../store/index.ts";
 import router from "../routes/index.ts";
 
 const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/vi`,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
 });
 
 axiosClient.interceptors.request.use((config) => {

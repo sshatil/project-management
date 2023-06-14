@@ -102,6 +102,7 @@
 import Navbar from "../../components/Navbar.vue";
 
 import { reactive } from "vue";
+import axiosClient from "../../utils/axios";
 
 const fromData = reactive({
   name: "",
@@ -109,8 +110,14 @@ const fromData = reactive({
   password: "",
 });
 
-const handleRegister = () => {
+const handleRegister = async () => {
   console.log("register");
+  try {
+    const { data } = await axiosClient.post("/users/register", fromData);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 
