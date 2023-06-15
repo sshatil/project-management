@@ -17,7 +17,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      store.commit("setToken", null);
+      store.commit("SET_TOKEN", null);
       router.push({ name: "login" });
     }
     throw error;

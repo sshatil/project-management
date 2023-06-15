@@ -21,7 +21,6 @@
               id="name"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name"
-              required
               v-model="fromData.name"
             />
           </div>
@@ -37,7 +36,6 @@
               id="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
-              required
               v-model="fromData.email"
             />
           </div>
@@ -53,7 +51,6 @@
               id="password"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required
               v-model="fromData.password"
             />
           </div>
@@ -103,6 +100,8 @@ import Navbar from "../../components/Navbar.vue";
 
 import { reactive } from "vue";
 import axiosClient from "../../utils/axios";
+// import { AxiosError } from "axios";
+import store from "../../store/index";
 
 const fromData = reactive({
   name: "",
@@ -115,8 +114,9 @@ const handleRegister = async () => {
   try {
     const { data } = await axiosClient.post("/users/register", fromData);
     console.log(data);
-  } catch (error) {
-    console.log(error);
+    store.commit("SET_TOKEN", data.token);
+  } catch (error: any) {
+    console.log(error.response?.data.message);
   }
 };
 </script>
