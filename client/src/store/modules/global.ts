@@ -11,7 +11,6 @@ const global = {
   mutations: {
     sidebar(state: State, payload: boolean) {
       state.showSidebar = payload;
-      console.log(payload);
     },
   },
 };

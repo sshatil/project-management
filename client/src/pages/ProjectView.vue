@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="w-full p-6">
+    <div class="w-full p-6 mt-7">
       <h1 class="text-2xl font-bold">Your Projects</h1>
       <!-- header -->
       <div class="mt-7 flex justify-between border-b-2 border-gray-400 py-2">

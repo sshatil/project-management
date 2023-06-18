@@ -11,8 +11,6 @@ const auth = {
   mutations: {
     SET_TOKEN(state: State, payload: string) {
       state.token = payload;
-      console.log(payload);
-
       localStorage.setItem("token", payload);
     },
   },

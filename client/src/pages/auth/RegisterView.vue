@@ -102,6 +102,7 @@ import { reactive } from "vue";
 import axiosClient from "../../utils/axios";
 // import { AxiosError } from "axios";
 import store from "../../store/index";
+import { useRouter } from "vue-router";
 
 const fromData = reactive({
   name: "",
@@ -109,12 +110,15 @@ const fromData = reactive({
   password: "",
 });
 
+const router = useRouter();
 const handleRegister = async () => {
   console.log("register");
   try {
     const { data } = await axiosClient.post("/users/register", fromData);
-    console.log(data);
     store.commit("SET_TOKEN", data.token);
+    if (data.token) {
+      router.push("/project");
+    }
   } catch (error: any) {
     console.log(error.response?.data.message);
   }
