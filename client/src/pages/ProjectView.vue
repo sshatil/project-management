@@ -14,7 +14,23 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import Layout from "../utils/Layout.vue";
+import axiosClient from "../utils/axios";
+
+// fetch projects
+const fetchProjects = async () => {
+  try {
+    const { data } = axiosClient.get("/project");
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <style scoped></style>

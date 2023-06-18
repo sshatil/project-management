@@ -1,0 +1,27 @@
+{
+  "_id": "6472c999a6732ffa1afb0d6c",
+  "projectName": "project 1",
+  "user": "6472c8d6b30c8768dd3596f1",
+  "users": [
+    "6472c8d6b30c8768dd3596f1",
+    "6472c9b4a6732ffa1afb0d6f",
+    "6472c9b4a6732ffa1afb0d6f",
+    "6472c9b4a6732ffa1afb0d6f"
+  ],
+  "startingDate": "1/1/1233",
+  "finishingDate": "1/2/1241",
+  "status": "Not Started",
+  "createdAt": "2023-05-28T03:25:13.844Z",
+  "updatedAt": "2023-06-02T14:33:26.769Z",
+  "__v": 3,
+  "tasks": [
+    {
+      "taskName": "project setup",
+      "status": "Not Started",
+      "assignTo": "6472c9b4a6732ffa1afb0d6f",
+      "_id": "6476be4b5d7582739e974059",
+      "createdAt": "2023-05-31T03:26:03.634Z",
+      "updatedAt": "2023-05-31T03:26:03.634Z"
+    }
+  ]
+}
