@@ -1,6 +1,6 @@
 <template>
   <main class="text-black dark:text-[#93999F] dark:bg-[#0D1117] min-h-screen">
-    <!-- <Sidebar /> -->
+    <Sidebar />
     <RouterView />
   </main>
 </template>

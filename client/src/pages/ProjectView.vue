@@ -9,28 +9,34 @@
         </div>
         <h1>Create new Project</h1>
       </div>
+      <!-- draggable -->
+      <div
+        class=""
+        v-for="data in store.state.project.projects"
+        :key="data._id"
+      >
+        <p>{{ data.projectName }}</p>
+      </div>
     </div>
   </Layout>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Layout from "../utils/Layout.vue";
-import axiosClient from "../utils/axios";
+
+import store from "../store/index";
 
 // fetch projects
 const fetchProjects = async () => {
-  try {
-    const { data } = axiosClient.get("/project");
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
+  await store.dispatch("fetchProjects");
 };
 
 onMounted(() => {
   fetchProjects();
 });
+
+console.log(store.state.project.projects.length);
 </script>
 
 <style scoped></style>
