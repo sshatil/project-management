@@ -5,7 +5,7 @@
       <div
         class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-transparent dark:border-gray-800"
       >
-        <form class="space-y-6" @submit.prevent="handleRegister">
+        <form class="space-y-6" @submit.prevent="handleLogin">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Login
           </h5>
@@ -75,8 +75,7 @@ const fromData = reactive({
 });
 
 const router = useRouter();
-const handleRegister = async () => {
-  console.log("register");
+const handleLogin = async () => {
   try {
     const { data } = await axiosClient.post("/users/login", fromData);
     store.commit("SET_TOKEN", data.token);
