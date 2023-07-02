@@ -6,7 +6,8 @@
         <div class="">
           <h1>filter</h1>
         </div>
-        <h1>Create new Project</h1>
+        <!-- <h1>Create new Project</h1> -->
+        <CreateProjectModal />
       </div>
       <div class="flex gap-3 flex-wrap justify-center p-5">
         <div
@@ -80,6 +81,7 @@ import ProjectList from "../components/ProjectList.vue";
 // import rawDisplays from "../components/rawDisplay.vue";
 
 import store from "../store/index";
+import CreateProjectModal from "../components/CreateProjectModal.vue";
 
 // const draggable = VueDraggableNext;
 
