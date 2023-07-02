@@ -8,15 +8,17 @@
         </div>
         <h1>Create new Project</h1>
       </div>
-      <div
-        class=""
-        v-for="data in store.state.project.projects"
-        :key="data._id"
-      >
-        <p>{{ data.projectName }}</p>
+      <div class="flex gap-3 flex-wrap justify-center p-5">
+        <div
+          class=""
+          v-for="data in store.state.project.projects"
+          :key="data._id"
+        >
+          <ProjectList :data="data" />
+        </div>
       </div>
       <!-- drag -->
-      <div class="flex justify-center">
+      <!-- <div class="flex justify-center">
         <div class="flex mx-10">
           <div class="card1 w-64 flex justify-center px-5">
             <draggable
@@ -60,34 +62,30 @@
 
         <div class="flex justify-between">
           <rawDisplays
-            class="w-64 mr-1"
+            class="w-80 mr-1"
             :value="store.state.project.projects"
           />
-          <rawDisplays class="w-64" :value="list2" />
+          <rawDisplays class="w-80" :value="list2" />
         </div>
-      </div>
+      </div> -->
     </div>
   </Layout>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, toRefs } from "vue";
+import { onMounted } from "vue";
 import Layout from "../utils/Layout.vue";
-import { VueDraggableNext } from "vue-draggable-next";
-import rawDisplays from "../components/rawDisplay.vue";
+import ProjectList from "../components/ProjectList.vue";
+// import { VueDraggableNext } from "vue-draggable-next";
+// import rawDisplays from "../components/rawDisplay.vue";
 
 import store from "../store/index";
 
-const draggable = VueDraggableNext;
+// const draggable = VueDraggableNext;
 
-const list1 = ref([
-  { name: "John", id: 1, status: "not started" },
-  { name: "Joao", id: 2, status: "not started" },
-  { name: "Jean", id: 3, status: "not started" },
-  { name: "Gerard", id: 4, status: "not started" },
-]);
+// const list1 = ref(store.state.project.projects);
 
-const list2 = ref([]);
+// const list2 = ref([]);
 
 const fetchProjects = async () => {
   await store.dispatch("fetchProjects");
@@ -97,58 +95,44 @@ onMounted(() => {
   fetchProjects();
 });
 
-const checkMove = (event: { draggedContext: { from: any; to: any } }) => {
-  const { from, to } = event.draggedContext;
-  if (from === to) {
-    return true;
-  }
-  return false;
-};
-// const handleDragEnd = (event: {
-//   draggedContext: { from: any; to: any; removed: any };
-// }) => {
-//   if (event && event.draggedContext) {
-//     const { from, to, removed } = event.draggedContext;
+// const checkMove = (event: { draggedContext: { from: any; to: any } }) => {
+//   const { from, to } = event.draggedContext;
+//   if (from === to) {
+//     return true;
+//   }
+//   return false;
+// };
 
+// const handleDragEnd = (event) => {
+//   if (event && event.draggedContext) {
+//     const { from, to, removed } = toRefs(event.draggedContext);
 //     if (removed.value) {
-//       if (from === "list1" && to === "list2") {
-//         list2.value.push(removed.element);
-//         removed.element.status = "in progress";
-//         console.log(removed.element.status);
-//       } else if (from === "list2" && to === "list1") {
-//         list1.value.push(removed.element);
-//         removed.element.status = "not started";
+//       if (from.value === "list1" && to.value === "list2") {
+//         removed.value.element.status = "status changed";
+//         list2.value.push(removed.value.element);
+//       } else if (from.value === "list2" && to.value === "list1") {
+//         removed.value.element.status = "not started";
+//         list1.value.push(removed.value.element);
+//       } else if (from.value === "list1" && to.value === "list1") {
+//         // Item moved within list1
+//         removed.value.element.status = "status changed";
+//       } else if (from.value === "list2" && to.value === "list2") {
+//         // Item moved within list2
+//         removed.value.element.status = "status changed";
 //       }
 //     }
 //   }
 // };
 
-const handleDragEnd = (event) => {
-  if (event && event.draggedContext) {
-    const { from, to, removed } = toRefs(event.draggedContext);
-
-    if (removed.value) {
-      if (from.value === "list1" && to.value === "list2") {
-        removed.value.element.status = "in progress";
-        list2.value.push(removed.value.element);
-      } else if (from.value === "list2" && to.value === "list1") {
-        removed.value.element.status = "not started";
-        list1.value.push(removed.value.element);
-      }
-    }
-  }
-};
-
-const log = (event) => {
-  const { moved, added } = event;
-  if (added) {
-    // added.element.status = "status changed";
-    console.log(added.element.status);
-  }
-
-  // if (moved) console.log("moved", moved);
-  // if (added) console.log("added", added, added.element);
-};
+// const log = (event) => {
+// const { moved, added } = event;
+// if (added) {
+//   added.element.status = "status changed";
+//   console.log(added.element.status);
+// }
+// if (moved) console.log("moved", moved);
+// if (added) console.log("added", added, added.element);
+// };
 </script>
 
 <style scoped></style>
