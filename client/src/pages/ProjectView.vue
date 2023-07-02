@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <Layout>
     <div class="w-full p-6 mt-7">
       <h1 class="text-2xl font-bold">Your Projects</h1>
@@ -15,38 +15,79 @@
       >
         <p>{{ data.projectName }}</p>
       </div>
-      <draggable
-        v-model="list"
-        handle=".handle"
-        :group="{ name: 'people', pull: 'clone', put: false }"
-        ghost-class="ghost"
-        :sort="false"
-      >
-        <transition-group>
-          <div v-for="element in list" :key="element.id">
-            {{ element.name }}
+      <!-- drag -->
+      <div class="flex justify-center">
+        <div class="flex mx-10">
+          <div class="card1 w-64 flex justify-center px-5">
+            <draggable
+              class="dragArea list-group w-full"
+              :list="store.state.project.projects"
+              group="people"
+              :sort="true"
+              @change="log"
+              :move="checkMove"
+              @end="handleDragEnd"
+            >
+              <div
+                class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+                v-for="element in store.state.project.projects"
+                :key="element._id"
+              >
+                {{ element.projectName }}
+              </div>
+            </draggable>
           </div>
-        </transition-group>
-      </draggable>
+          <div class="card1 w-64 flex justify-center">
+            <draggable
+              class="dragArea list-group w-full"
+              :list="list2"
+              group="people"
+              :sort="true"
+              @change="log"
+              :move="checkMove"
+              @end="handleDragEnd"
+            >
+              <div
+                class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+                v-for="element in list2"
+                :key="element._id"
+              >
+                {{ element.projectName }}
+              </div>
+            </draggable>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <rawDisplays
+            class="w-64 mr-1"
+            :value="store.state.project.projects"
+          />
+          <rawDisplays class="w-64" :value="list2" />
+        </div>
+      </div>
     </div>
   </Layout>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 import Layout from "../utils/Layout.vue";
 import { VueDraggableNext } from "vue-draggable-next";
+import rawDisplays from "../components/rawDisplay.vue";
 
 import store from "../store/index";
 
 const draggable = VueDraggableNext;
 
-const list = ref([
-  { name: "John", id: 1 },
-  { name: "Joao", id: 2 },
-  { name: "Jean", id: 3 },
-  { name: "Gerard", id: 4 },
+const list1 = ref([
+  { name: "John", id: 1, status: "not started" },
+  { name: "Joao", id: 2, status: "not started" },
+  { name: "Jean", id: 3, status: "not started" },
+  { name: "Gerard", id: 4, status: "not started" },
 ]);
+
+const list2 = ref([]);
 
 const fetchProjects = async () => {
   await store.dispatch("fetchProjects");
@@ -56,110 +97,58 @@ onMounted(() => {
   fetchProjects();
 });
 
-console.log(store.state.project.projects.length);
+const checkMove = (event: { draggedContext: { from: any; to: any } }) => {
+  const { from, to } = event.draggedContext;
+  if (from === to) {
+    return true;
+  }
+  return false;
+};
+// const handleDragEnd = (event: {
+//   draggedContext: { from: any; to: any; removed: any };
+// }) => {
+//   if (event && event.draggedContext) {
+//     const { from, to, removed } = event.draggedContext;
+
+//     if (removed.value) {
+//       if (from === "list1" && to === "list2") {
+//         list2.value.push(removed.element);
+//         removed.element.status = "in progress";
+//         console.log(removed.element.status);
+//       } else if (from === "list2" && to === "list1") {
+//         list1.value.push(removed.element);
+//         removed.element.status = "not started";
+//       }
+//     }
+//   }
+// };
+
+const handleDragEnd = (event) => {
+  if (event && event.draggedContext) {
+    const { from, to, removed } = toRefs(event.draggedContext);
+
+    if (removed.value) {
+      if (from.value === "list1" && to.value === "list2") {
+        removed.value.element.status = "in progress";
+        list2.value.push(removed.value.element);
+      } else if (from.value === "list2" && to.value === "list1") {
+        removed.value.element.status = "not started";
+        list1.value.push(removed.value.element);
+      }
+    }
+  }
+};
+
+const log = (event) => {
+  const { moved, added } = event;
+  if (added) {
+    // added.element.status = "status changed";
+    console.log(added.element.status);
+  }
+
+  // if (moved) console.log("moved", moved);
+  // if (added) console.log("added", added, added.element);
+};
 </script>
 
-<style scoped></style> -->
-
-<template>
-  <div class="flex justify-center">
-    <div class="flex mx-10">
-      <div class="card1 w-64 flex justify-center px-5">
-        <draggable
-          class="dragArea list-group w-full"
-          :list="list1"
-          :group="{ name: 'people', pull: 'clone', put: false }"
-          :sort="true"
-          @change="log"
-          :move="checkMove"
-        >
-          <div
-            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
-            v-for="element in list1"
-            :key="element.name"
-          >
-            {{ element.name }}
-          </div>
-        </draggable>
-      </div>
-      <div class="card1 w-64 flex justify-center">
-        <draggable
-          class="dragArea list-group w-full"
-          :list="list2"
-          group="people"
-          @change="log"
-          :move="checkMove"
-        >
-          <div
-            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
-            v-for="element in list2"
-            :key="element.name"
-          >
-            {{ element.name }}
-          </div>
-        </draggable>
-      </div>
-    </div>
-
-    <!-- <div class="flex justify-between">
-      <rawDisplays class="w-64 mr-1" :value="list1" />
-      <rawDisplays class="w-64" :value="list2" />
-    </div> -->
-  </div>
-</template>
-
-<script>
-import { defineComponent } from "vue";
-import { VueDraggableNext } from "vue-draggable-next";
-// import rawDisplays from "../components/rawDisplay.vue";
-export default defineComponent({
-  name: "App",
-  components: {
-    draggable: VueDraggableNext,
-  },
-  data() {
-    return {
-      enabled: true,
-      list1: [
-        { name: "John", id: 1 },
-        { name: "Joao", id: 2 },
-        { name: "Jean", id: 3 },
-        { name: "Gerard", id: 4 },
-      ],
-      list2: [
-        { name: "Juan", id: 5 },
-        { name: "Edgard", id: 6 },
-        { name: "Johnson", id: 7 },
-      ],
-      dragging: false,
-    };
-  },
-  methods: {
-    add() {
-      console.log("add");
-    },
-    replace() {
-      console.log("replace");
-    },
-    checkMove(event) {
-      console.log("checkMove", event.draggedContext);
-      console.log("Future index: " + event.draggedContext.futureIndex);
-    },
-    log(event) {
-      const { moved, added } = event;
-
-      if (moved) console.log("moved", moved);
-      if (added) console.log("added", added, added.element);
-    },
-  },
-});
-</script>
-<style>
-.item-attribute {
-  padding: 10px;
-  border: 1px solid black;
-}
-.clone-grid {
-  display: flex;
-}
-</style>
+<style scoped></style>
