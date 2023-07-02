@@ -31,6 +31,11 @@
       aria-label="Sidebar"
     > -->
     <div class="">
+      <div
+        class="fixed top-0 left-0 right-0 w-screen h-screen bg-gray-600 bg-opacity-40"
+        :class="state.showSidebar ? 'block' : 'hidden'"
+        @click="store.commit('sidebar', false)"
+      ></div>
       <aside
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:block sm:relative"
         :class="
@@ -44,7 +49,7 @@
           class="h-full px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-[#161B22]"
         >
           <div
-            class="absolute -right-1 sm:hidden"
+            class="absolute right-1 sm:hidden"
             @click="store.commit('sidebar', false)"
           >
             <XMarkIcon
