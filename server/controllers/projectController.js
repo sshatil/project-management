@@ -45,6 +45,12 @@ const getProject = asyncHandler(async (req, res) => {
   res.json(allProjects);
 });
 
+// project details
+const projectDetails = asyncHandler(async (req, res) => {
+  const singleProject = await Project.findById(req.params.id);
+  res.json(singleProject);
+});
+
 // update project
 const updateProject = asyncHandler(async (req, res) => {
   const { projectName, startingDate, finishingDate, userId, status } = req.body;
@@ -179,4 +185,5 @@ export {
   createTask,
   updateTask,
   deleteTask,
+  projectDetails,
 };

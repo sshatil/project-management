@@ -1,21 +1,17 @@
 <template>
   <div
-    class="max-w-sm w-72 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="max-w-sm p-6 w-72 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
-    <div class="flex justify-between items-center">
+    <div class="">
       <h5
-        class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white truncate"
       >
         {{ projectName }}
       </h5>
-      <h6>{{ status }}</h6>
     </div>
-    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
-      {{ startingDate }}
-    </p>
-    <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-      See our guideline
-    </a>
+    <h6 class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+      Status: <span class="">{{ status }}</span>
+    </h6>
   </div>
 </template>
 
