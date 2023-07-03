@@ -1,11 +1,11 @@
 <template>
   <!-- Modal toggle -->
   <button
-    class="flex items-center gap-2 font-bold hover:text-green-400"
+    class="flex items-center gap-2 font-bold hover:text-green-400 transition"
     type="button"
     @click="handleModal"
   >
-    Create Project <PlusIcon class="w-7 h-7" />
+    Create New Project <PlusIcon class="w-7 h-7" />
   </button>
 
   <!-- Main modal -->
@@ -49,7 +49,7 @@
               Create New Project
             </h3>
             <!-- from  -->
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmit" class="space-y-3">
               <div>
                 <label
                   class="block mb-2 text-sm font-medium"
@@ -57,11 +57,11 @@
                   >Project Name</label
                 >
                 <input
-                  v-model="name"
+                  v-model="fromData.name"
                   type="text"
                   id="error"
                   class="border text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
-                  placeholder="Error input"
+                  placeholder="Project Name"
                   :class="
                     error
                       ? 'border-red-500 bg-red-50 text-red-900 dark:text-red-500 dark:border-red-500 placeholder-red-700 dark:placeholder-red-500'
@@ -72,9 +72,27 @@
                   class="mt-2 text-sm text-red-600 dark:text-red-500"
                   v-if="error"
                 >
-                  Input field is required
+                  Project name is required
                 </p>
               </div>
+              <div>
+                <label class="block mb-2 text-sm font-medium"
+                  >Starting Date</label
+                >
+                <input
+                  v-model="fromData.startingDate"
+                  type="date"
+                  id="error"
+                  class="border border-gray-500 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
+                  placeholder="Project Name"
+                />
+              </div>
+              <button
+                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="submit"
+              >
+                Create New Project
+              </button>
             </form>
             <!-- end -->
           </div>
@@ -86,8 +104,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
+import axiosClient from "../utils/axios";
 
 const shoModal = ref<boolean>(false);
 
@@ -95,15 +114,31 @@ const handleModal = () => {
   shoModal.value = !shoModal.value;
 };
 
+interface FormType {
+  name: string;
+  startingDate: string;
+}
+
 // form
-const name = ref<string>("");
+const fromData = reactive<FormType>({
+  name: "",
+  startingDate: "",
+});
 const error = ref<boolean>(false);
-const handleSubmit = () => {
-  if (name.value === "") {
+const handleSubmit = async () => {
+  if (fromData.name === "") {
     error.value = true;
   } else {
-    console.log(name);
-    error.value = false;
+    try {
+      await axiosClient.post("/project", {
+        projectName: fromData.name,
+        startingDate: fromData.startingDate,
+      });
+      fromData.name = "";
+      fromData.startingDate = "";
+    } catch (error: any) {
+      console.log(error.response?.data.message);
+    }
   }
 };
 </script>
