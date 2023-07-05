@@ -1,4 +1,5 @@
 export interface Project {
+  value: any;
   _id: string;
   projectName: string;
   user: string;
