@@ -47,7 +47,10 @@ const getProject = asyncHandler(async (req, res) => {
 
 // project details
 const projectDetails = asyncHandler(async (req, res) => {
-  const singleProject = await Project.findById(req.params.id).populate("users");
+  const singleProject = await Project.findById(req.params.id).populate(
+    "users",
+    "-password"
+  );
   res.json(singleProject);
 });
 

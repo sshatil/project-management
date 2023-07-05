@@ -1,9 +1,8 @@
 export interface Project {
-  value: any;
   _id: string;
   projectName: string;
   user: string;
-  users: string[];
+  users: User[];
   startingDate: string;
   finishingDate: string;
   status: string;
@@ -20,4 +19,13 @@ export interface Task {
   _id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

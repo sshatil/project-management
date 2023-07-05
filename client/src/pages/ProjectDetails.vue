@@ -1,15 +1,20 @@
 <template>
   <Layout>
-    <div class="mt-14 m-4">
-      <div class="">Project details</div>
-      <div class="">
+    <div class="mt-14 m-4 w-full">
+      <div class="flex justify-between">
         <div class="">
-          <h1>{{ singleProject.projectName }}</h1>
+          <h1 class="text-lg md:text-3xl font-bold text-gray-300">
+            {{ singleProject.projectName }}
+          </h1>
         </div>
         <!-- right side -->
-        <div class="">
-          <div class="" v-for="project in singleProject.users" :key="project">
-            {{ project }}
+        <div class="flex -space-x-3">
+          <div class="" v-for="user in singleProject.users" :key="user">
+            <h1
+              class="w-10 h-10 border bg-green-700 border-white rounded-full dark:border-gray-800 flex justify-center items-center text-lg uppercase text-white"
+            >
+              {{ user.name.slice(0, 1) }}
+            </h1>
           </div>
         </div>
       </div>
@@ -55,20 +60,7 @@ import { Project } from "../../types/project";
 const route = useRoute();
 const paramValue = route.params.id;
 
-const singleProject = ref<Project>({
-  value: undefined,
-  _id: "",
-  projectName: "",
-  user: "",
-  users: [],
-  startingDate: "",
-  finishingDate: "",
-  status: "",
-  createdAt: "",
-  updatedAt: "",
-  __v: 0,
-  tasks: [],
-});
+const singleProject = ref<Project | any>({});
 
 const fetchSingleProject = async () => {
   try {
