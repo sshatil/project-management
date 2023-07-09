@@ -1,9 +1,9 @@
 <template>
   <Layout>
     <div class="mt-14 m-4 w-full">
-      <div class="flex justify-between">
+      <div class="flex justify-between border-b-2 border-gray-500 pb-4">
         <div class="">
-          <h1 class="text-lg md:text-3xl font-bold text-gray-300">
+          <h1 class="text-lg md:text-3xl font-bold">
             {{ singleProject.projectName }}
           </h1>
         </div>
@@ -19,7 +19,12 @@
         </div>
       </div>
 
-      <!-- <div class="overflow-x-auto">
+      <!-- project details -->
+      <div class="">
+        <h3>{{ singleProject.status }}</h3>
+      </div>
+      <!-- task table -->
+      <div class="overflow-x-auto">
         <table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
@@ -34,19 +39,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              v-for="task in singleProject.tasks"
+              :key="task._id"
+            >
               <td
                 class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white border-r"
               >
-                Silver
+                {{ task.taskName }}
               </td>
-              <td class="px-6 py-3 border-r">Laptop</td>
-              <td class="px-6 py-3 border-r">$2999</td>
-              <td class="px-6 py-3">$2999</td>
+              <td class="px-6 py-3 border-r">{{ task.status }}</td>
+              <td class="px-6 py-3 border-r">Img</td>
+              <td class="px-6 py-3">{{ task.createdAt.slice(0, 10) }}</td>
             </tr>
           </tbody>
         </table>
-      </div> -->
+      </div>
     </div>
   </Layout>
 </template>

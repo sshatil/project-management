@@ -16,7 +16,7 @@ const store = createStore({
     createPersistedState({
       storage: window.localStorage,
       key: "store",
-      paths: ["user", "global", "auth"],
+      paths: ["global", "auth"],
     }),
   ],
 });
