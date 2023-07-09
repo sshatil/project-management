@@ -28,33 +28,44 @@
         <table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
-          <thead
-            class="text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400"
-          >
-            <tr class="border-b">
+          <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+            <tr class="border-b dark:border-b dark:border-gray-700">
               <th scope="col" class="px-6 py-3">Task name</th>
               <th scope="col" class="px-6 py-3">Status</th>
               <th scope="col" class="px-6 py-3">Assign</th>
-              <th scope="col" class="px-6 py-3">Project name</th>
+              <th scope="col" class="px-6 py-3">Due</th>
+              <th scope="col" class="px-6 py-3">Create</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              class="border-b dark:border-gray-700"
               v-for="task in singleProject.tasks"
               :key="task._id"
             >
               <td
-                class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white border-r"
+                class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white border-r dark:border-gray-700"
               >
                 {{ task.taskName }}
               </td>
-              <td class="px-6 py-3 border-r">{{ task.status }}</td>
-              <td class="px-6 py-3 border-r">Img</td>
-              <td class="px-6 py-3">{{ task.createdAt.slice(0, 10) }}</td>
+              <td class="px-6 py-3 border-r dark:border-gray-700">
+                {{ task.status }}
+              </td>
+              <!-- <td class="px-6 py-3 border-r dark:border-gray-700">
+                {{ task.assignTo.name }}
+              </td>
+              <td class="px-6 py-3 border-r dark:border-gray-700">
+                {{ task.assignTo.dueData }}
+              </td> -->
+              <td class="px-6 py-3 dark:border-gray-700">
+                {{ task.createdAt.slice(0, 10) }}
+              </td>
             </tr>
           </tbody>
         </table>
+        <div class="dark:border-gray-700 border-b cursor-pointer w-full">
+          <p class="px-6 py-3"><CreateTaskModal :paramValue="paramValue" /></p>
+        </div>
       </div>
     </div>
   </Layout>
@@ -66,6 +77,7 @@ import Layout from "../utils/Layout.vue";
 import { onMounted, ref } from "vue";
 import axiosClient from "../utils/axios";
 import { Project } from "../../types/project";
+import CreateTaskModal from "../components/projectDetails/CreateTaskModal.vue";
 const route = useRoute();
 const paramValue = route.params.id;
 
