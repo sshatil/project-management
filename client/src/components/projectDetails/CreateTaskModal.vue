@@ -126,11 +126,12 @@
 import { ref, reactive } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../../utils/axios";
+import store from "../../store";
 
 const shoModal = ref<boolean>(false);
 
 interface Props {
-  paramValue: string;
+  paramValue?: string | any;
 }
 
 const { paramValue } = defineProps<Props>();
@@ -155,7 +156,9 @@ const fromData = reactive<FormType>({
   assignTo: "",
 });
 const error = ref<boolean>(false);
+
 const handleSubmit = async () => {
+  store.commit("loading", true);
   if (fromData.taskName === "") {
     error.value = true;
   } else {
@@ -163,6 +166,7 @@ const handleSubmit = async () => {
       await axiosClient.post(`/project/task/${paramValue}`, {
         taskName: fromData.taskName,
       });
+      store.commit("loading", false);
       fromData.taskName = "";
       shoModal.value = false;
     } catch (error: any) {

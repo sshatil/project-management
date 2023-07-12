@@ -4,12 +4,16 @@
       <div class="flex justify-between border-b-2 border-gray-500 pb-4">
         <div class="">
           <h1 class="text-lg md:text-3xl font-bold">
-            {{ singleProject.projectName }}
+            {{ store.state.project.singleProject.projectName }}
           </h1>
         </div>
         <!-- right side -->
         <div class="flex -space-x-3">
-          <div class="" v-for="user in singleProject.users" :key="user">
+          <div
+            class=""
+            v-for="user in store.state.project.singleProject.users"
+            :key="user"
+          >
             <h1
               class="w-10 h-10 border bg-green-700 border-white rounded-full dark:border-gray-800 flex justify-center items-center text-lg uppercase text-white"
             >
@@ -21,7 +25,7 @@
 
       <!-- project details -->
       <div class="">
-        <h3>{{ singleProject.status }}</h3>
+        <h3>{{ store.state.project.singleProject.status }}</h3>
       </div>
       <!-- task table -->
       <div class="overflow-x-auto">
@@ -40,7 +44,7 @@
           <tbody>
             <tr
               class="border-b dark:border-gray-700"
-              v-for="task in singleProject.tasks"
+              v-for="task in store.state.project.singleProject.tasks"
               :key="task._id"
             >
               <td
@@ -51,12 +55,12 @@
               <td class="px-6 py-3 border-r dark:border-gray-700">
                 {{ task.status }}
               </td>
-              <!-- <td class="px-6 py-3 border-r dark:border-gray-700">
-                {{ task.assignTo.name }}
+              <td class="px-6 py-3 border-r dark:border-gray-700">
+                {{ task.assignTo?.name }}
               </td>
               <td class="px-6 py-3 border-r dark:border-gray-700">
-                {{ task.assignTo.dueData }}
-              </td> -->
+                {{ task.assignTo?.dueData }}
+              </td>
               <td class="px-6 py-3 dark:border-gray-700">
                 {{ task.createdAt.slice(0, 10) }}
               </td>
@@ -74,23 +78,25 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import Layout from "../utils/Layout.vue";
-import { onMounted, ref } from "vue";
-import axiosClient from "../utils/axios";
-import { Project } from "../../types/project";
+import { computed, onMounted, watch } from "vue";
+// import { Project } from "../../types/project";
 import CreateTaskModal from "../components/projectDetails/CreateTaskModal.vue";
+import store from "../store";
+
 const route = useRoute();
 const paramValue = route.params.id;
 
-const singleProject = ref<Project | any>({});
+// const singleProject = ref<Project | any>({});
 
 const fetchSingleProject = async () => {
-  try {
-    const { data } = await axiosClient.get(`/project/${paramValue}`);
-    singleProject.value = data;
-  } catch (error: any) {
-    console.log(error.response?.data.message);
-  }
+  await store.dispatch("fetchSingleProject", paramValue);
 };
+
+const isLoading = computed(() => store.state.project.isLoading);
+
+watch(isLoading, () => {
+  fetchSingleProject();
+});
 
 onMounted(() => {
   fetchSingleProject();
