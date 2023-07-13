@@ -1,7 +1,8 @@
+import { User } from "../../../types/project";
 import axiosClient from "../../utils/axios";
 
 interface State {
-  users: [];
+  users: User[];
 }
 
 const user = {

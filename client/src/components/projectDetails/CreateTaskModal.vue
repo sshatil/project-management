@@ -106,18 +106,24 @@
                   id="error"
                   autocomplete="off"
                   @input="handleInput"
-                  class="border border-gray-500 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
+                  class="border border-gray-500 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5"
                 />
               </div>
-              <ul v-if="showResults">
-                <li
-                  v-for="result in searchResults"
-                  :key="result.id"
-                  @click="selectResult(result)"
-                >
-                  {{ result.name }}
-                </li>
-              </ul>
+              <div
+                class="max-h-32 overflow-y-scroll px-2 py-1 dark:bg-gray-800 bg-gray-200 rounded-md"
+                v-if="showResults"
+              >
+                <ul>
+                  <li
+                    v-for="result in searchResults"
+                    :key="result._id"
+                    @click="selectResult(result)"
+                    class="cursor-pointer hover:text-green-600"
+                  >
+                    {{ result.name }}
+                  </li>
+                </ul>
+              </div>
               <button
                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="submit"
@@ -139,6 +145,7 @@ import { ref, reactive, computed, onMounted } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../../utils/axios";
 import store from "../../store";
+import { User } from "../../../types/project";
 
 const shoModal = ref<boolean>(false);
 
@@ -168,30 +175,22 @@ const fromData = reactive<FormType>({
   assignTo: "",
 });
 const error = ref<boolean>(false);
-const searchResults = ref([]);
+const searchResults = ref<User[]>([]);
 
-// Simulated data for demonstration purposes
-const data = [
-  { id: 1, name: "Apple" },
-  { id: 2, name: "Banana" },
-  { id: 3, name: "Cherry" },
-  { id: 4, name: "Grape" },
-  { id: 5, name: "Lemon" },
-];
 const showResults = computed(() => searchResults.value.length > 0);
 
 const handleInput = () => {
   if (fromData.assignTo === "") {
     searchResults.value = [];
   } else {
-    searchResults.value = data.filter((item) =>
+    searchResults.value = store.state.user.users.filter((item: User) =>
       item.name.toLowerCase().includes(fromData.assignTo.toLowerCase())
     );
   }
 };
 
-const selectResult = (result) => {
-  fromData.assignTo = result.name;
+const selectResult = (result: User) => {
+  fromData.assignTo = result._id;
   searchResults.value = [];
 };
 
@@ -210,9 +209,13 @@ const handleSubmit = async () => {
         taskName: fromData.taskName,
         status: fromData.status,
         dueDate: fromData.dueDate,
+        assignTo: fromData.assignTo,
       });
       store.commit("loading", false);
       fromData.taskName = "";
+      fromData.status = "";
+      fromData.dueDate = "";
+      fromData.assignTo = "";
       shoModal.value = false;
     } catch (error: any) {
       console.log(error.response?.data.message);

@@ -55,7 +55,7 @@
               <td class="px-6 py-3 border-r dark:border-gray-700 min-w-[150px]">
                 {{ task.status }}
               </td>
-              <td class="px-6 py-3 border-r dark:border-gray-700">
+              <td class="px-6 py-3 border-r dark:border-gray-700 min-w-[150px]">
                 {{ task.assignTo?.name }}
               </td>
               <td class="px-6 py-3 border-r dark:border-gray-700 min-w-[150px]">
