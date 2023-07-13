@@ -165,6 +165,8 @@ const handleSubmit = async () => {
     try {
       await axiosClient.post(`/project/task/${paramValue}`, {
         taskName: fromData.taskName,
+        status: fromData.status,
+        dueDate: fromData.dueDate,
       });
       store.commit("loading", false);
       fromData.taskName = "";

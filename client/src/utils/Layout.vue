@@ -1,7 +1,9 @@
 <template>
-  <div class="flex">
+  <div class="flex w-screen">
     <Sidebar />
-    <slot></slot>
+    <div class="h-screen overflow-x-scroll w-full">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

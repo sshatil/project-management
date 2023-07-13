@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="mt-14 m-4 w-full">
+    <div class="mt-14 m-4">
       <div class="flex justify-between border-b-2 border-gray-500 pb-4">
         <div class="">
           <h1 class="text-lg md:text-3xl font-bold">
@@ -52,16 +52,16 @@
               >
                 {{ task.taskName }}
               </td>
-              <td class="px-6 py-3 border-r dark:border-gray-700">
+              <td class="px-6 py-3 border-r dark:border-gray-700 min-w-[150px]">
                 {{ task.status }}
               </td>
               <td class="px-6 py-3 border-r dark:border-gray-700">
                 {{ task.assignTo?.name }}
               </td>
-              <td class="px-6 py-3 border-r dark:border-gray-700">
-                {{ task.assignTo?.dueData }}
+              <td class="px-6 py-3 border-r dark:border-gray-700 min-w-[150px]">
+                {{ task?.dueDate }}
               </td>
-              <td class="px-6 py-3 dark:border-gray-700">
+              <td class="px-6 py-3 dark:border-gray-700 min-w-[150px]">
                 {{ task.createdAt.slice(0, 10) }}
               </td>
             </tr>
