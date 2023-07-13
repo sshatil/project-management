@@ -104,6 +104,7 @@
                   v-model="fromData.assignTo"
                   type="search"
                   id="error"
+                  autocomplete="off"
                   @input="handleInput"
                   class="border border-gray-500 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
                 />
