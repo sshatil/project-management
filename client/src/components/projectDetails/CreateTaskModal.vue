@@ -135,7 +135,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../../utils/axios";
 import store from "../../store";
@@ -194,6 +194,11 @@ const selectResult = (result) => {
   fromData.assignTo = result.name;
   searchResults.value = [];
 };
+
+// fetch user
+onMounted(() => {
+  store.dispatch("getUsers");
+});
 
 const handleSubmit = async () => {
   store.commit("loading", true);
