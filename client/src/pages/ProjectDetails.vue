@@ -67,7 +67,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="dark:border-gray-700 border-b cursor-pointer w-full">
+        <div class="dark:border-gray-700 border-b w-full">
           <p class="px-6 py-3"><CreateTaskModal :paramValue="paramValue" /></p>
         </div>
       </div>

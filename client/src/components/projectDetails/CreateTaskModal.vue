@@ -97,15 +97,26 @@
                   class="border border-gray-500 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
                 />
               </div>
+              <!-- select user -->
               <div>
                 <label class="block mb-2 text-sm font-medium">Assign To</label>
                 <input
                   v-model="fromData.assignTo"
                   type="search"
                   id="error"
+                  @input="handleInput"
                   class="border border-gray-500 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
                 />
               </div>
+              <ul v-if="showResults">
+                <li
+                  v-for="result in searchResults"
+                  :key="result.id"
+                  @click="selectResult(result)"
+                >
+                  {{ result.name }}
+                </li>
+              </ul>
               <button
                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="submit"
@@ -123,7 +134,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../../utils/axios";
 import store from "../../store";
@@ -156,6 +167,32 @@ const fromData = reactive<FormType>({
   assignTo: "",
 });
 const error = ref<boolean>(false);
+const searchResults = ref([]);
+
+// Simulated data for demonstration purposes
+const data = [
+  { id: 1, name: "Apple" },
+  { id: 2, name: "Banana" },
+  { id: 3, name: "Cherry" },
+  { id: 4, name: "Grape" },
+  { id: 5, name: "Lemon" },
+];
+const showResults = computed(() => searchResults.value.length > 0);
+
+const handleInput = () => {
+  if (fromData.assignTo === "") {
+    searchResults.value = [];
+  } else {
+    searchResults.value = data.filter((item) =>
+      item.name.toLowerCase().includes(fromData.assignTo.toLowerCase())
+    );
+  }
+};
+
+const selectResult = (result) => {
+  fromData.assignTo = result.name;
+  searchResults.value = [];
+};
 
 const handleSubmit = async () => {
   store.commit("loading", true);
