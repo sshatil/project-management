@@ -5,16 +5,23 @@ interface State {
   projects: Project[];
   singleProject: Project;
   isLoading: boolean;
+  taskId: string;
 }
 
-const auth = {
+const project = {
   state() {
     return {
       projects: [],
       singleProject: {},
       isLoading: true,
+      taskId: "",
     };
   },
+  // getters: {
+  //   getTaskById: (state) => (id) => {
+  //     return state.singleProject.tasks?.find((todo) => todo._id === id);
+  //   },
+  // },
   mutations: {
     getProjects(state: State, payload: any) {
       state.projects = payload;
@@ -24,6 +31,9 @@ const auth = {
     },
     loading(state: State, payload: any) {
       state.isLoading = payload;
+    },
+    storeTaskId(state: State, payload: any) {
+      state.taskId = payload;
     },
   },
   actions: {
@@ -46,7 +56,10 @@ const auth = {
         console.log(error.response?.data.message);
       }
     },
+    async updateTask({ commit, state }) {
+      console.log(state.taskId);
+    },
   },
 };
 
-export default auth;
+export default project;

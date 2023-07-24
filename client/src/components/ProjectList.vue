@@ -29,5 +29,4 @@ interface Props {
 const props = defineProps<Props>();
 
 const { projectName, status, _id } = toRefs(props.data);
-console.log(props.data);
 </script>

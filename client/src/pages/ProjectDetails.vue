@@ -27,6 +27,8 @@
       <div class="">
         <h3>{{ store.state.project.singleProject.status }}</h3>
       </div>
+    </div>
+    <div class="mt-7 m-4">
       <!-- task table -->
       <div class="overflow-x-auto">
         <table
@@ -41,11 +43,15 @@
               <th scope="col" class="px-6 py-3">Create</th>
             </tr>
           </thead>
-          <tbody>
+          <!-- <TaskDetails> -->
+          <tbody
+            v-for="task in store.state.project.singleProject.tasks"
+            :key="task._id"
+          >
+            <!-- table raw -->
             <tr
-              class="border-b dark:border-gray-700"
-              v-for="task in store.state.project.singleProject.tasks"
-              :key="task._id"
+              @click="handleUpdateTask(task._id)"
+              class="border-b dark:border-gray-700 cursor-pointer"
             >
               <td
                 class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white border-r dark:border-gray-700"
@@ -66,22 +72,29 @@
               </td>
             </tr>
           </tbody>
+          <!-- </TaskDetails> -->
         </table>
         <div class="dark:border-gray-700 border-b w-full">
-          <p class="px-6 py-3"><CreateTaskModal :paramValue="paramValue" /></p>
+          <p class="px-6 py-3">
+            <CreateTaskModal :paramValue="paramValue" />
+          </p>
         </div>
       </div>
     </div>
+    <!-- drawer -->
+    <TaskDetails :selectedTask="selectedTask" />
   </Layout>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import Layout from "../utils/Layout.vue";
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 // import { Project } from "../../types/project";
 import CreateTaskModal from "../components/projectDetails/CreateTaskModal.vue";
 import store from "../store";
+import TaskDetails from "../components/projectDetails/TaskDetails.vue";
+import { Task } from "../../types/project";
 
 const route = useRoute();
 const paramValue = route.params.id;
@@ -101,4 +114,14 @@ watch(isLoading, () => {
 onMounted(() => {
   fetchSingleProject();
 });
+
+const selectedTask = ref<Task | any>({});
+const handleUpdateTask = (taskId: string) => {
+  // store.commit("storeTaskId", taskId);
+  const task = store.state.project.singleProject.tasks.find(
+    (f) => f._id === taskId
+  );
+  selectedTask.value = task;
+  store.commit("drawer", !store.state.global.showDrawer);
+};
 </script>

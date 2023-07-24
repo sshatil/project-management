@@ -154,7 +154,6 @@ interface Props {
 }
 
 const { paramValue } = defineProps<Props>();
-console.log(paramValue);
 
 const handleModal = () => {
   shoModal.value = !shoModal.value;
