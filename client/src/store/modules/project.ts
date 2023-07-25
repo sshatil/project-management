@@ -56,9 +56,6 @@ const project = {
         console.log(error.response?.data.message);
       }
     },
-    async updateTask({ commit, state }) {
-      console.log(state.taskId);
-    },
   },
 };
 

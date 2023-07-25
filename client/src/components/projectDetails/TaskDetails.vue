@@ -120,9 +120,15 @@
         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="submit"
       >
-        Create New Project
+        Update Task
       </button>
     </form>
+    <button
+      class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 mt-4"
+      @click="handleDeleteTask"
+    >
+      Delete Task
+    </button>
   </div>
 </template>
 
@@ -142,7 +148,7 @@ interface FormType {
 
 interface Props {
   selectedTask: FormType;
-  paramValue: string;
+  paramValue?: string | any;
 }
 
 const props = defineProps<Props>();
@@ -165,7 +171,7 @@ watch(
       fromData.taskName = newSelectedTask.taskName || "";
       fromData.status = newSelectedTask.status || "";
       fromData.dueDate = newSelectedTask.dueDate || "";
-      fromData.assignTo = newSelectedTask.assignTo?.name || "";
+      fromData.assignTo = newSelectedTask.assignTo?._id || "";
     }
   }
 );
@@ -211,6 +217,7 @@ const handleSubmit = async () => {
         }
       );
       store.commit("loading", false);
+      store.commit("drawer", true);
       fromData.taskName = "";
       fromData.status = "";
       fromData.dueDate = "";
@@ -218,6 +225,19 @@ const handleSubmit = async () => {
     } catch (error: any) {
       console.log(error.response?.data.message);
     }
+  }
+};
+
+const handleDeleteTask = async () => {
+  store.commit("loading", true);
+  try {
+    await axiosClient.delete(
+      `/project/task/${props.paramValue}/${props.selectedTask._id}`
+    );
+    store.commit("loading", false);
+    store.commit("drawer", true);
+  } catch (error) {
+    console.log(error);
   }
 };
 </script>

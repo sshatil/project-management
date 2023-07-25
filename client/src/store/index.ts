@@ -12,13 +12,13 @@ const store = createStore({
     auth,
     project,
   },
-  plugins: [
-    createPersistedState({
-      storage: window.localStorage,
-      key: "store",
-      paths: ["auth", "project"],
-    }),
-  ],
+  // plugins: [
+  //   createPersistedState({
+  //     storage: window.localStorage,
+  //     key: "store",
+  //     paths: ["global", "auth", "project"],
+  //   }),
+  // ],
 });
 
 export default store;
