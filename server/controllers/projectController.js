@@ -144,6 +144,7 @@ const updateTask = asyncHandler(async (req, res) => {
       task.taskName = taskName;
       task.status = status;
       task.dueDate = dueDate;
+      task.assignTo = new mongoose.Types.ObjectId(assignTo);
 
       const updatedTask = await project.save();
       res.json(updatedTask);

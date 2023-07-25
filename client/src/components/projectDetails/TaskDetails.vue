@@ -123,8 +123,6 @@
         Create New Project
       </button>
     </form>
-    <!-- {{ taskName }} -->
-    {{ props.selectedTask.taskName }}
   </div>
 </template>
 
@@ -139,10 +137,12 @@ interface FormType {
   status: string;
   dueDate: string;
   assignTo: string | any;
+  _id?: string;
 }
 
 interface Props {
   selectedTask: FormType;
+  paramValue: string;
 }
 
 const props = defineProps<Props>();
@@ -165,7 +165,7 @@ watch(
       fromData.taskName = newSelectedTask.taskName || "";
       fromData.status = newSelectedTask.status || "";
       fromData.dueDate = newSelectedTask.dueDate || "";
-      fromData.assignTo = newSelectedTask.assignTo.name || "";
+      fromData.assignTo = newSelectedTask.assignTo?.name || "";
     }
   }
 );
@@ -201,12 +201,15 @@ const handleSubmit = async () => {
     error.value = true;
   } else {
     try {
-      await axiosClient.post(`/project/task/`, {
-        taskName: fromData.taskName,
-        status: fromData.status,
-        dueDate: fromData.dueDate,
-        assignTo: fromData.assignTo,
-      });
+      await axiosClient.put(
+        `/project/task/${props.paramValue}/${props.selectedTask._id}`,
+        {
+          taskName: fromData.taskName,
+          status: fromData.status,
+          dueDate: fromData.dueDate,
+          assignTo: fromData.assignTo,
+        }
+      );
       store.commit("loading", false);
       fromData.taskName = "";
       fromData.status = "";

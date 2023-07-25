@@ -82,7 +82,7 @@
       </div>
     </div>
     <!-- drawer -->
-    <TaskDetails :selectedTask="selectedTask" />
+    <TaskDetails :selectedTask="selectedTask" :paramValue="paramValue" />
   </Layout>
 </template>
 
