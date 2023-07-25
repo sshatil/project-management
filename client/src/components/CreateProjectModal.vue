@@ -107,6 +107,7 @@
 import { ref, reactive } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
+import store from "../store";
 
 const shoModal = ref<boolean>(false);
 
@@ -129,6 +130,7 @@ const handleSubmit = async () => {
   if (fromData.name === "") {
     error.value = true;
   } else {
+    store.commit("projectLoadingMutation", true);
     try {
       await axiosClient.post("/project", {
         projectName: fromData.name,
@@ -136,6 +138,8 @@ const handleSubmit = async () => {
       });
       fromData.name = "";
       fromData.startingDate = "";
+      store.commit("projectLoadingMutation", false);
+      shoModal.value = !shoModal.value;
     } catch (error: any) {
       console.log(error.response?.data.message);
     }

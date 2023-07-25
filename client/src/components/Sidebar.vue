@@ -106,13 +106,16 @@
                   id="dropdown-example"
                   class="py-2 space-y-2"
                   :class="dropdown ? 'block' : 'hidden'"
+                  v-for="project in store.state.project.projects"
                 >
                   <li>
-                    <a
-                      href="#"
+                    <RouterLink
+                      :to="`/details/${project._id}`"
                       class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                      >Products 1</a
                     >
+                      {{ project.projectName }}
+                    </RouterLink>
+                    <!-- {{ store.state.project.projects }} -->
                   </li>
                 </ul>
               </li>

@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import Layout from "../utils/Layout.vue";
 import ProjectList from "../components/ProjectList.vue";
 // import { VueDraggableNext } from "vue-draggable-next";
@@ -92,6 +92,12 @@ import CreateProjectModal from "../components/CreateProjectModal.vue";
 const fetchProjects = async () => {
   await store.dispatch("fetchProjects");
 };
+
+const isLoading = computed(() => store.state.project.projectLoading);
+
+watch(isLoading, () => {
+  fetchProjects();
+});
 
 onMounted(() => {
   fetchProjects();

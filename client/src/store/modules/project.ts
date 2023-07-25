@@ -6,6 +6,7 @@ interface State {
   singleProject: Project;
   isLoading: boolean;
   taskId: string;
+  projectLoading: false;
 }
 
 const project = {
@@ -15,6 +16,7 @@ const project = {
       singleProject: {},
       isLoading: true,
       taskId: "",
+      projectLoading: false,
     };
   },
   // getters: {
@@ -31,6 +33,9 @@ const project = {
     },
     loading(state: State, payload: any) {
       state.isLoading = payload;
+    },
+    projectLoadingMutation(state: State, payload: any) {
+      state.projectLoading = payload;
     },
     storeTaskId(state: State, payload: any) {
       state.taskId = payload;

@@ -98,6 +98,9 @@ import { Task } from "../../types/project";
 
 const route = useRoute();
 const paramValue = route.params.id;
+const id = computed(() => paramValue);
+
+console.log(id);
 
 // const singleProject = ref<Project | any>({});
 
@@ -107,7 +110,7 @@ const fetchSingleProject = async () => {
 
 const isLoading = computed(() => store.state.project.isLoading);
 
-watch(isLoading, () => {
+watch([isLoading], () => {
   fetchSingleProject();
 });
 

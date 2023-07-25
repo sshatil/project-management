@@ -7,9 +7,19 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from "@vueuse/core";
+import store from "./store";
+import { onMounted } from "vue";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+const fetchProjects = async () => {
+  await store.dispatch("fetchProjects");
+};
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <style scoped></style>
