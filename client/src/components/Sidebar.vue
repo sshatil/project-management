@@ -103,7 +103,6 @@
                   </button>
                 </RouterLink>
                 <ul
-                  id="dropdown-example"
                   class="py-2 space-y-2"
                   :class="dropdown ? 'block' : 'hidden'"
                   v-for="project in store.state.project.projects"
@@ -115,7 +114,6 @@
                     >
                       {{ project.projectName }}
                     </RouterLink>
-                    <!-- {{ store.state.project.projects }} -->
                   </li>
                 </ul>
               </li>
