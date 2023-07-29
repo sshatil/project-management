@@ -13,6 +13,10 @@ const auth = {
       state.token = payload;
       localStorage.setItem("token", payload);
     },
+    LOG_OUT(state: State) {
+      state.token = "";
+      localStorage.removeItem("token");
+    },
   },
 };
 
