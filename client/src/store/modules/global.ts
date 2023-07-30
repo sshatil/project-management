@@ -1,6 +1,7 @@
 interface State {
   showSidebar: boolean;
   showDrawer: boolean;
+  shoModal: boolean;
 }
 
 const global = {
@@ -8,6 +9,7 @@ const global = {
     return {
       showSidebar: false,
       showDrawer: true,
+      shoModal: false,
     };
   },
   mutations: {
@@ -16,6 +18,9 @@ const global = {
     },
     drawer(state: State, payload: boolean) {
       state.showDrawer = payload;
+    },
+    modal(state: State, payload: boolean) {
+      state.shoModal = payload;
     },
   },
 };

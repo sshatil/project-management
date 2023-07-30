@@ -32,6 +32,7 @@
         class="inline-flex items-end text-sm font-medium hover:text-green-500"
         type="button"
         :class="showDropdown ? 'block' : 'hidden'"
+        @click="handleProjectUpdate"
       >
         <PencilSquareIcon class="w-5 h-5" />
       </button>
@@ -77,11 +78,7 @@
 import { ref, toRefs } from "vue";
 import type { Project } from "../../types/project";
 import { RouterLink } from "vue-router";
-import {
-  EllipsisVerticalIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/vue/24/solid";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
 import store from "../store";
 
@@ -96,7 +93,6 @@ const { projectName, status, _id } = toRefs(props.data);
 const showDropdown = ref<boolean>(false);
 
 const handleProjectDelete = async (id: string) => {
-  console.log(id);
   store.commit("projectLoadingMutation", true);
   try {
     await axiosClient.delete(`/project/${props.data._id}`);
@@ -104,5 +100,17 @@ const handleProjectDelete = async (id: string) => {
   } catch (error) {
     console.log(error);
   }
+};
+const handleProjectUpdate = async () => {
+  console.log("update");
+
+  store.commit("modal", !store.state.global.shoModal);
+  // store.commit("projectLoadingMutation", true);
+  // try {
+  //   await axiosClient.delete(`/project/${props.data._id}`);
+  //   store.commit("projectLoadingMutation", false);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 </script>
