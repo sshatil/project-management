@@ -24,11 +24,21 @@
       </div>
     </div>
     <div class="mt-12">
-      <h1 class="text-center">Features</h1>
-      <div class="">
-        <h3>Project List</h3>
+      <h1
+        class="text-center border-b border-dashed pb-2 text-xl md:text-2xl font-bold"
+      >
+        Features
+      </h1>
+      <div class="text-center mt-7 space-y-2">
+        <h3 class="text-lg md:text-xl">Project List</h3>
         <div class="max-w-xl mx-auto">
           <img src="/project-page.png" alt="" class="w-full h-full" />
+        </div>
+      </div>
+      <div class="text-center mt-7 space-y-2">
+        <h3 class="text-lg md:text-xl">Project Details</h3>
+        <div class="max-w-xl mx-auto">
+          <img src="/project-details.png" alt="" class="w-full h-full" />
         </div>
       </div>
     </div>

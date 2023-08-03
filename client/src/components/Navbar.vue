@@ -1,12 +1,26 @@
 <template>
   <div class="fixed left-0 right-0">
     <div class="flex justify-between items-center p-3 max-w-5xl mx-auto">
-      <div class="flex items-center gap-3">
-        <p class="text-2xl mr-6"><RouterLink to="/">Logo</RouterLink></p>
-        <p><RouterLink :to="{ name: 'project' }">Project</RouterLink></p>
-        <p><RouterLink to="/">Log in</RouterLink></p>
-      </div>
       <div class="">
+        <p class="text-2xl mr-6"><RouterLink to="/">Logo</RouterLink></p>
+        <!-- <p><RouterLink :to="{ name: 'project' }">Project</RouterLink></p>
+        <p><RouterLink to="/">Log in</RouterLink></p> -->
+      </div>
+      <div class="flex items-center gap-3">
+        <RouterLink :to="{ name: 'project' }">
+          <p
+            class="border px-4 p-1 rounded-md cursor-pointer hover:border-dashed hover:border transition"
+          >
+            <Param></Param>Project
+          </p>
+        </RouterLink>
+        <RouterLink :to="{ name: 'login' }">
+          <p
+            class="border px-4 p-1 rounded-md cursor-pointer hover:border-dashed hover:border transition"
+          >
+            <Param></Param>Login
+          </p>
+        </RouterLink>
         <button @click="toggleDark()" class="cursor-pointer">
           <div
             v-if="isDark"

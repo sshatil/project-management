@@ -38,8 +38,24 @@ const router = createRouter({
   ],
 });
 
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requireAuth && !store.state.auth.token) {
+//     next({ name: "login" });
+//   } else {
+//     next();
+//   }
+// });
+
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth && !store.state.auth.token) {
+  const isLoggedIn = !!store.state.auth.token;
+
+  if (to.name === "home" && isLoggedIn) {
+    next({ name: "project" });
+  } else if (to.name === "register" && isLoggedIn) {
+    next({ name: "project" });
+  } else if (to.name === "login" && isLoggedIn) {
+    next({ name: "project" });
+  } else if (to.meta.requireAuth && !isLoggedIn) {
     next({ name: "login" });
   } else {
     next();

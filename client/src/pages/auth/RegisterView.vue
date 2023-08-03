@@ -85,8 +85,10 @@
           </button>
           <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
             Already have an account?
-            <a href="#" class="text-blue-700 hover:underline dark:text-blue-500"
-              >Login</a
+            <RouterLink
+              to="login"
+              class="text-blue-700 hover:underline dark:text-blue-500"
+              >Login</RouterLink
             >
           </div>
         </form>
