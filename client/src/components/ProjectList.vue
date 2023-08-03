@@ -27,16 +27,16 @@
       <TrashIcon />
     </button> -->
     <!-- dropdown -->
-    <div class="absolute right-2 top-3">
+    <!-- <div class="absolute right-2 top-3">
       <button
         class="inline-flex items-end text-sm font-medium hover:text-green-500"
         type="button"
         :class="showDropdown ? 'block' : 'hidden'"
-        @click="handleProjectUpdate"
+        @click="handleProjectUpdate(_id)"
       >
         <PencilSquareIcon class="w-5 h-5" />
       </button>
-    </div>
+    </div> -->
     <div class="absolute right-2 bottom-3">
       <button
         class="inline-flex items-end text-sm font-medium hover:text-red-500"
@@ -100,17 +100,5 @@ const handleProjectDelete = async (id: string) => {
   } catch (error) {
     console.log(error);
   }
-};
-const handleProjectUpdate = async () => {
-  console.log("update");
-
-  store.commit("modal", !store.state.global.shoModal);
-  // store.commit("projectLoadingMutation", true);
-  // try {
-  //   await axiosClient.delete(`/project/${props.data._id}`);
-  //   store.commit("projectLoadingMutation", false);
-  // } catch (error) {
-  //   console.log(error);
-  // }
 };
 </script>

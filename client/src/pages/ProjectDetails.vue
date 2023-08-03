@@ -2,10 +2,17 @@
   <Layout>
     <div class="mt-14 m-4">
       <div class="flex justify-between border-b-2 border-gray-500 pb-4">
-        <div class="">
+        <div class="flex gap-3">
           <h1 class="text-lg md:text-3xl font-bold">
             {{ store.state.project.singleProject.projectName }}
           </h1>
+          <button
+            class="text-sm font-medium hover:text-green-500"
+            type="button"
+            @click="handleProjectUpdate"
+          >
+            <PencilSquareIcon class="w-5 h-5" />
+          </button>
         </div>
         <!-- right side -->
         <div class="flex -space-x-3">
@@ -83,6 +90,10 @@
     </div>
     <!-- drawer -->
     <TaskDetails :selectedTask="selectedTask" :paramValue="paramValue" />
+    <UpdateProject
+      :data="store.state.project.singleProject"
+      :paramValue="paramValue"
+    />
   </Layout>
 </template>
 
@@ -95,6 +106,8 @@ import CreateTaskModal from "../components/projectDetails/CreateTaskModal.vue";
 import store from "../store";
 import TaskDetails from "../components/projectDetails/TaskDetails.vue";
 import { Task } from "../../types/project";
+import UpdateProject from "../components/UpdateProject.vue";
+import { PencilSquareIcon } from "@heroicons/vue/24/solid";
 
 const route = useRoute();
 const paramValue = route.params.id;
@@ -121,5 +134,16 @@ const handleUpdateTask = (taskId: string) => {
   );
   selectedTask.value = task;
   store.commit("drawer", !store.state.global.showDrawer);
+};
+
+const handleProjectUpdate = async () => {
+  store.commit("modal", !store.state.global.shoModal);
+  // store.commit("projectLoadingMutation", true);
+  // try {
+  //   await axiosClient.delete(`/project/${props.data._id}`);
+  //   store.commit("projectLoadingMutation", false);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 </script>

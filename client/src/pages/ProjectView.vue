@@ -70,7 +70,7 @@
         </div>
       </div> -->
     </div>
-    <UpdateProject />
+    <!-- <UpdateProject /> -->
   </Layout>
 </template>
 
