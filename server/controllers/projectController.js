@@ -23,7 +23,8 @@ const addUser = asyncHandler(async (req, res) => {
   const addUsers = await Project.findByIdAndUpdate(
     req.params.id,
     {
-      $push: { users: userId },
+      // $push: { users: userId },
+      $addToSet: { users: userId },
     },
     {
       new: true,
