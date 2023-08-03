@@ -100,33 +100,6 @@
                   <option value="Done">Done</option>
                 </select>
               </div>
-              <!-- search user -->
-              <!-- <div>
-                <label class="block mb-2 text-sm font-medium">Assign To</label>
-                <input
-                  v-model="fromData.assignTo"
-                  type="search"
-                  id="error"
-                  autocomplete="off"
-                  @input="handleInput"
-                  class="border border-gray-500 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5"
-                />
-              </div>
-              <div
-                class="max-h-32 overflow-y-scroll px-2 py-1 dark:bg-gray-800 bg-gray-200 rounded-md"
-                v-if="showResults"
-              >
-                <ul>
-                  <li
-                    v-for="result in searchResults"
-                    :key="result._id"
-                    @click="selectResult(result)"
-                    class="cursor-pointer hover:text-green-600"
-                  >
-                    {{ result.name }}
-                  </li>
-                </ul>
-              </div> -->
               <button
                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="submit"
@@ -145,12 +118,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, onMounted, watch, toRefs } from "vue";
+import { ref, reactive, watch } from "vue";
 import axiosClient from "../utils/axios";
 import store from "../store";
-import { Project, User } from "../../types/project";
-
-const shoModal = ref<boolean>(false);
+import { Project } from "../../types/project";
 
 interface Props {
   data: Project;
@@ -158,8 +129,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const { projectName, status, _id } = toRefs(props.data);
 
 const handleModal = () => {
   // shoModal.value = !shoModal.value;
@@ -180,7 +149,6 @@ const fromData = reactive<FormType>({
   finishingDate: "",
   status: "",
 });
-// console.log(projectName);
 
 watch(
   () => props.data,
@@ -195,30 +163,6 @@ watch(
 );
 
 const error = ref<boolean>(false);
-
-// const searchResults = ref<User[]>([]);
-
-// const showResults = computed(() => searchResults.value.length > 0);
-
-// const handleInput = () => {
-//   if (fromData.assignTo === "") {
-//     searchResults.value = [];
-//   } else {
-//     searchResults.value = store.state.user.users.filter((item: User) =>
-//       item.name.toLowerCase().includes(fromData.assignTo.toLowerCase())
-//     );
-//   }
-// };
-
-// const selectResult = (result: User) => {
-//   fromData.assignTo = result._id;
-//   searchResults.value = [];
-// };
-
-// fetch user
-// onMounted(() => {
-//   store.dispatch("getUsers");
-// });
 
 const handleSubmit = async () => {
   if (fromData.name === "") {
