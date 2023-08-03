@@ -122,8 +122,11 @@ const createTask = asyncHandler(async (req, res) => {
       taskName,
       status,
       dueDate,
-      assignTo: new mongoose.Types.ObjectId(assignTo),
+      // assignTo: assignTo ? new mongoose.Types.ObjectId(assignTo) : "",
     };
+    if (assignTo) {
+      task.assignTo = new mongoose.Types.ObjectId(assignTo);
+    }
     project.tasks.push(task);
     await project.save();
     res.status(201).json({ msg: "Task added" });
@@ -144,7 +147,7 @@ const updateTask = asyncHandler(async (req, res) => {
       task.taskName = taskName;
       task.status = status;
       task.dueDate = dueDate;
-      task.assignTo = new mongoose.Types.ObjectId(assignTo);
+      task.assignTo = assignTo ? new mongoose.Types.ObjectId(assignTo) : "";
 
       const updatedTask = await project.save();
       res.json(updatedTask);

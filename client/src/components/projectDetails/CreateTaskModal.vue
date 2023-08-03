@@ -169,7 +169,7 @@ interface FormType {
 // form
 const fromData = reactive<FormType>({
   taskName: "",
-  status: "",
+  status: "Not Started",
   dueDate: "",
   assignTo: "",
 });
