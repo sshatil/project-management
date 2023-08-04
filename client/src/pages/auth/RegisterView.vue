@@ -11,48 +11,61 @@
           </h5>
           <div>
             <label
-              for="name"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Your Name</label
+              class="block mb-2 text-sm font-medium"
+              :class="error ? 'text-red-700 dark:text-red-500' : ''"
+              >Your name</label
             >
             <input
-              type="name"
-              name="name"
-              id="name"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name"
               v-model="fromData.name"
+              type="text"
+              class="border text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
+              placeholder="Enter your name"
+              :class="
+                error ? 'border-red-500 dark:border-red-500' : 'border-gray-500'
+              "
             />
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="error">
+              Input field is required
+            </p>
           </div>
           <div>
             <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              class="block mb-2 text-sm font-medium"
+              :class="error ? 'text-red-700 dark:text-red-500' : ''"
               >Your email</label
             >
             <input
+              v-model="fromData.email"
               type="email"
               name="email"
-              id="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name@company.com"
-              v-model="fromData.email"
+              class="border text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
+              placeholder="example@gmail.com"
+              :class="
+                error ? 'border-red-500 dark:border-red-500' : 'border-gray-500'
+              "
             />
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="error">
+              Input field is required
+            </p>
           </div>
           <div>
             <label
-              for="password"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              class="block mb-2 text-sm font-medium"
+              :class="error ? 'text-red-700 dark:text-red-500' : ''"
               >Your password</label
             >
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               v-model="fromData.password"
+              type="password"
+              class="border text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5"
+              placeholder="••••••••"
+              :class="
+                error ? 'border-red-500 dark:border-red-500' : 'border-gray-500'
+              "
             />
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="error">
+              Input field is required
+            </p>
           </div>
           <!-- <div class="flex items-start">
           <div class="flex items-start">
@@ -100,11 +113,12 @@
 <script setup lang="ts">
 import Navbar from "../../components/Navbar.vue";
 
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import axiosClient from "../../utils/axios";
 // import { AxiosError } from "axios";
 import store from "../../store/index";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
 
 const fromData = reactive({
   name: "",
@@ -113,6 +127,9 @@ const fromData = reactive({
 });
 
 const router = useRouter();
+
+const error = ref<boolean>(false);
+
 const handleRegister = async () => {
   console.log("register");
   try {
@@ -122,7 +139,7 @@ const handleRegister = async () => {
       router.push("/project");
     }
   } catch (error: any) {
-    console.log(error.response?.data.message);
+    toast(error.response?.data.message);
   }
 };
 </script>
