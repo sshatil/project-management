@@ -42,7 +42,7 @@
         class="inline-flex items-end text-sm font-medium hover:text-red-500"
         type="button"
         :class="showDropdown ? 'block' : 'hidden'"
-        @click="handleProjectDelete(_id)"
+        @click="handleProjectDelete()"
       >
         <TrashIcon class="w-5 h-5" />
       </button>
@@ -78,7 +78,7 @@
 import { ref, toRefs } from "vue";
 import type { Project } from "../../types/project";
 import { RouterLink } from "vue-router";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/solid";
+import { TrashIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
 import store from "../store";
 import { toast } from "vue3-toastify";
@@ -93,7 +93,7 @@ const { projectName, status, _id } = toRefs(props.data);
 
 const showDropdown = ref<boolean>(false);
 
-const handleProjectDelete = async (id: string) => {
+const handleProjectDelete = async () => {
   store.commit("projectLoadingMutation", true);
   try {
     await axiosClient.delete(`/project/${props.data._id}`);

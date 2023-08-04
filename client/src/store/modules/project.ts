@@ -42,7 +42,7 @@ const project = {
     },
   },
   actions: {
-    async fetchProjects({ commit, state }) {
+    async fetchProjects({ commit }) {
       try {
         const { data } = await axiosClient.get("/project");
         commit("getProjects", data);

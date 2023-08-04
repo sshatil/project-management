@@ -83,7 +83,6 @@ import ProjectList from "../components/ProjectList.vue";
 
 import store from "../store/index";
 import CreateProjectModal from "../components/CreateProjectModal.vue";
-import UpdateProject from "../components/UpdateProject.vue";
 
 // const draggable = VueDraggableNext;
 

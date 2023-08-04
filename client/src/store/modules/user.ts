@@ -17,7 +17,7 @@ const user = {
     },
   },
   actions: {
-    async getUsers({ commit, state }) {
+    async getUsers({ commit }) {
       try {
         const { data } = await axiosClient.get("/users");
         commit("getUsers", data);

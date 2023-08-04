@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 import user from "./modules/user.ts";
 import global from "./modules/global.ts";
 import auth from "./modules/auth.ts";

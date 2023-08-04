@@ -126,7 +126,7 @@ import { toast } from "vue3-toastify";
 
 interface Props {
   data: Project;
-  paramValue: string;
+  paramValue?: string | any;
 }
 
 const props = defineProps<Props>();

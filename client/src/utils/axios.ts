@@ -3,7 +3,8 @@ import store from "../store/index.ts";
 import router from "../routes/index.ts";
 
 const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+  // baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+  baseURL: `https://sore-ruby-chimpanzee-suit.cyclic.app/api/v1`,
 });
 
 axiosClient.interceptors.request.use((config) => {
