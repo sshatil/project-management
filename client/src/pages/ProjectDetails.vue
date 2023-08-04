@@ -38,7 +38,15 @@
             class="absolute top-28 right-0 p-5 dark:bg-[#161B22] bg-slate-200 rounded-md"
             v-if="showAddMemberDropdown"
           >
-            <p class="font-medium mb-3">Add Members</p>
+            <div class="flex justify-between">
+              <p class="font-medium mb-3">Add Members</p>
+              <p
+                class="cursor-pointer"
+                @click="showAddMemberDropdown = !showAddMemberDropdown"
+              >
+                <XMarkIcon class="w-5 h-5" />
+              </p>
+            </div>
             <!-- search user -->
             <div>
               <input
@@ -154,8 +162,13 @@ import store from "../store";
 import TaskDetails from "../components/projectDetails/TaskDetails.vue";
 import { Task, User } from "../../types/project";
 import UpdateProject from "../components/UpdateProject.vue";
-import { PencilSquareIcon, UserPlusIcon } from "@heroicons/vue/24/solid";
+import {
+  PencilSquareIcon,
+  UserPlusIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
+import { toast } from "vue3-toastify";
 
 const route = useRoute();
 const paramValue = route.params.id;
@@ -236,6 +249,7 @@ const handleAddUser = async () => {
       showAddMemberDropdown.value = false;
       userId.value = "";
       store.commit("loading", false);
+      toast.success("User added");
     } catch (error: any) {
       console.log(error.response?.data.message);
     }

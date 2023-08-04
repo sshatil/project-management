@@ -108,6 +108,7 @@ import { ref, reactive } from "vue";
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
 import store from "../store";
+import { toast } from "vue3-toastify";
 
 const shoModal = ref<boolean>(false);
 
@@ -138,6 +139,7 @@ const handleSubmit = async () => {
       });
       fromData.name = "";
       fromData.startingDate = "";
+      toast.success("Project created successfully");
       store.commit("projectLoadingMutation", false);
       shoModal.value = !shoModal.value;
     } catch (error: any) {

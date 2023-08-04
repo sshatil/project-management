@@ -146,6 +146,7 @@ import { PlusIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../../utils/axios";
 import store from "../../store";
 import { User } from "../../../types/project";
+import { toast } from "vue3-toastify";
 
 const shoModal = ref<boolean>(false);
 
@@ -211,6 +212,7 @@ const handleSubmit = async () => {
         assignTo: fromData.assignTo,
       });
       store.commit("loading", false);
+      toast.success("Task created successfully");
       fromData.taskName = "";
       fromData.status = "";
       fromData.dueDate = "";

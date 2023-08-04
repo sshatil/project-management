@@ -137,6 +137,7 @@ import { ref, reactive, onMounted, computed, watch } from "vue";
 import store from "../../store";
 import axiosClient from "../../utils/axios";
 import { User } from "../../../types/project";
+import { toast } from "vue3-toastify";
 
 interface FormType {
   taskName: string;
@@ -218,6 +219,7 @@ const handleSubmit = async () => {
       );
       store.commit("loading", false);
       store.commit("drawer", true);
+      toast.success("Task updated");
       fromData.taskName = "";
       fromData.status = "";
       fromData.dueDate = "";
@@ -236,6 +238,7 @@ const handleDeleteTask = async () => {
     );
     store.commit("loading", false);
     store.commit("drawer", true);
+    toast.error("Task deleted");
   } catch (error) {
     console.log(error);
   }

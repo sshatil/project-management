@@ -122,6 +122,7 @@ import { ref, reactive, watch } from "vue";
 import axiosClient from "../utils/axios";
 import store from "../store";
 import { Project } from "../../types/project";
+import { toast } from "vue3-toastify";
 
 interface Props {
   data: Project;
@@ -181,6 +182,7 @@ const handleSubmit = async () => {
       fromData.finishingDate = "";
       fromData.status = "";
       store.commit("loading", false);
+      toast.success("Project updated successfully");
       store.commit("modal", !store.state.global.shoModal);
     } catch (error: any) {
       console.log(error.response?.data.message);

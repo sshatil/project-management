@@ -81,6 +81,7 @@ import { RouterLink } from "vue-router";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/solid";
 import axiosClient from "../utils/axios";
 import store from "../store";
+import { toast } from "vue3-toastify";
 
 interface Props {
   data: Project;
@@ -96,6 +97,7 @@ const handleProjectDelete = async (id: string) => {
   store.commit("projectLoadingMutation", true);
   try {
     await axiosClient.delete(`/project/${props.data._id}`);
+    toast.success("Project deleted");
     store.commit("projectLoadingMutation", false);
   } catch (error) {
     console.log(error);
