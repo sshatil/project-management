@@ -69,6 +69,8 @@ import axiosClient from "../../utils/axios";
 import store from "../../store/index";
 import { RouterLink, useRouter } from "vue-router";
 
+import { toast } from "vue3-toastify";
+
 const fromData = reactive({
   email: "",
   password: "",
@@ -83,7 +85,7 @@ const handleLogin = async () => {
       router.push("/project");
     }
   } catch (error: any) {
-    console.log(error.response?.data.message);
+    toast(error.response?.data.message);
   }
 };
 </script>
